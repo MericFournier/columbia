@@ -12,6 +12,10 @@ require_once( trailingslashit( get_stylesheet_directory() ) . 'inc/assets.php' )
 
 // Required to demonstrate WP AJAX Page Loader (as WordPress doesn't ship with even simple post navigation functions)
 require_once( trailingslashit( get_stylesheet_directory() ) . 'inc/navigation.php' );
+include_once( trailingslashit( get_stylesheet_directory() ) . 'inc/create_artist.php' );
+include_once( trailingslashit( get_stylesheet_directory() ) . 'inc/create_album.php' );
+include_once( trailingslashit( get_stylesheet_directory() ) . 'inc/thumbnail-support.php' );
+
 
 // Only the bare minimum to get the theme up and running
 function voidx_setup() {
@@ -47,3 +51,14 @@ function voidx_widgets_init() {
   ) );
 }
 add_action( 'widgets_init', 'voidx_widgets_init' );
+
+
+//Post 2 P
+function my_connection_types() {
+  p2p_register_connection_type( array(
+    'name' => 'posts_to_pages',
+    'from' => 'post',
+    'to' => 'page'
+  ) );
+}
+add_action( 'p2p_init', 'my_connection_types' );

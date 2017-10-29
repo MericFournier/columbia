@@ -24,3 +24,4 @@
       </header>
     </div>
     <div id="wrap-main" class="wrap-main">
+    <?= get_template_directory() ?> 
