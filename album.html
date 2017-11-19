@@ -141,78 +141,71 @@
          <h2>titre de l'album</h2>
          <p>nom de l'artiste</p>
          <p>catégorie de l'album - année</p>
-         <ul class="player__nav__list">
-            <li class="selected">
-               <p>In reverse</p>
-               <p>3:27</p>
+         <ul id="player__list" class="player__nav__list">
+            <li data-artist="Intro" data-title="clack" data-src="musique.mp3">
+               <p class="player__nav__title">Intro</p>
+               <p class="player__nav__duration">3:27</p>
                <div class="playIcon playIcon--pause"></div>
             </li>
-            <li>
-               <p>In reverse</p>
-               <p>3:27</p>
-               <div class="playIcon"></div>
+            <li data-artist="Michel Sardou" data-title="Le Conémara" data-src="sardou.mp3">
+               <p class="player__nav__title">Conemara</p>
+               <p class="player__nav__duration">3:27</p>
+               <div class="playIcon playIcon--pause"></div>
             </li>
-            <li>
-               <p>In reverse</p>
-               <p>3:27</p>
-               <div class="playIcon"></div>
+            <li data-artist="Intro" data-title="clack" data-src="musique.mp3">
+               <p class="player__nav__title">Intro zrzerez </p>
+               <p class="player__nav__duration">3:27</p>
+               <div class="playIcon playIcon--pause"></div>
             </li>
-            <li>
-               <p>In reverse</p>
-               <p>3:27</p>
-               <div class="playIcon"></div>
+            <li data-artist="Michel Sardou" data-title="Le Conémara" data-src="sardou.mp3">
+               <p class="player__nav__title">Conem ze ara</p>
+               <p class="player__nav__duration">3:27</p>
+               <div class="playIcon playIcon--pause"></div>
             </li>
-            <li>
-               <p>In reverse</p>
-               <p>3:27</p>
-               <div class="playIcon"></div>
+            <li data-artist="Intro" data-title="clack" data-src="musique.mp3">
+               <p class="player__nav__title">Intro zez z</p>
+               <p class="player__nav__duration">3:27</p>
+               <div class="playIcon playIcon--pause"></div>
             </li>
-            <li>
-               <p>In reverse</p>
-               <p>3:27</p>
-               <div class="playIcon"></div>
+            <li data-artist="Michel Sardou" data-title="Le Conémara" data-src="sardou.mp3">
+               <p class="player__nav__title">Conem ze z ara</p>
+               <p class="player__nav__duration">3:27</p>
+               <div class="playIcon playIcon--pause"></div>
             </li>
-            <li>
-               <p>In reverse</p>
-               <p>3:27</p>
-               <div class="playIcon"></div>
+            <li data-artist="Intro" data-title="clack" data-src="musique.mp3">
+               <p class="player__nav__title">Intro ze </p>
+               <p class="player__nav__duration">3:27</p>
+               <div class="playIcon playIcon--pause"></div>
             </li>
-            <li>
-               <p>In reverse</p>
-               <p>3:27</p>
-               <div class="playIcon"></div>
-            </li>
-            <li>
-               <p>In reverse</p>
-               <p>3:27</p>
-               <div class="playIcon"></div>
-            </li>
-            <li>
-               <p>In reverse</p>
-               <p>3:27</p>
-               <div class="playIcon"></div>
+            <li data-artist="Michel Sardou" data-title="Le Conémara" data-src="sardou.mp3">
+               <p class="player__nav__title">Conema  aera</p>
+               <p class="player__nav__duration">3:27</p>
+               <div class="playIcon playIcon--pause"></div>
             </li>
          </ul>
       </div>
    </div>
 </div>
 </div>
-<div class="playerMain">
+<div class="playerMain" id="player">
    <div class="player__song__infos">
-      <p>Artiste name</p>
-      <p>Song name</p>
+      <p id="player_data_artist">Artiste name</p>
+      <p id="player_data_title">Song name</p>
    </div>
    <div class="player__song">
-      <a class="player__song__button player__song__button--pause"></a>
+      <a id ="player_button" class="player__song__button"></a>
       <div class="player__song__timeline">
-         <div class="timeline__filler">
-            <div class="timeline__fill"></div>
+         <div id="player_timeline_path" class="timeline__filler">
+            <div id="player_timeline_fill" class="timeline__fill"></div>
          </div>
          <div class="timeline__time">
-            <p>00:00</p>
-            <p>03:40</p>
+            <p id="player_time_actual">00:00</p>
+            <p id="player_time_total">03:40</p>
          </div>
       </div>
+      <audio id="audio_player">
+         <source id="audio_src" src="mp3/musique.mp3" type="audio/mp3" />
+      </audio>
    </div>
 </div>
 <div class="contenu">
@@ -286,6 +279,123 @@
          </div>
       </div>
    </div>
+   <div class="clear_tab"></div>
+
+
+   <script>
+
+      var player = {};
+      player.section = document.querySelector('#player');
+      player.audio = document.querySelector('#audio_player');
+      player.src = document.querySelector('#audio_src');
+      player.controls = {};
+      player.controls.button = document.querySelector('#player_button');
+      player.controls.timeline = {};
+      player.controls.timeline.path = document.querySelector('#player_timeline_path');
+      player.controls.timeline.fill = document.querySelector('#player_timeline_fill');
+      player.controls.time = {};
+      player.controls.time.actual = document.querySelector('#player_time_actual');
+      player.controls.time.total = document.querySelector('#player_time_total');
+      player.data = {};
+      player.data.title = document.querySelector('#player_data_title');
+      player.data.artist = document.querySelector('#player_data_artist');
+      player.classnameState = ['playing'];
+      player.functions = {};
+      player.functions.playState = function() {
+         if (player.audio.duration > 0 && !player.audio.paused) {
+            console.log('pause');
+            player.audio.pause();
+            player.controls.button.classList.remove('player__song__button--pause');
+            player.controls.button.classList.add('player__song__button--play');
+         } else {
+            console.log('play');
+            player.audio.play();
+            player.controls.button.classList.remove('player__song__button--play');
+            player.controls.button.classList.add('player__song__button--pause');
+         }
+      }
+      player.functions.durationState = function() {
+         var setRatio = function(current,total) {
+            ratio = (current/total)*100;
+            ratio+=1;
+            //console.log(ratio);
+            player.controls.timeline.fill.style.width = ratio+"%";
+         }
+         var setTime = function(duration) {
+            var duree = Math.floor(duration);
+            var minutes = Math.floor(duration/60);
+            var secondes = Math.floor(duration%60);
+            if ( secondes < 10){
+               secondes = '0'+secondes;
+            }
+            return minutes+':'+secondes;
+         }
+         var current = player.audio.currentTime;
+         player.controls.time.actual.innerHTML = current;
+         var total = player.audio.duration;
+         total = total/60;
+         totalShow = total.toFixed(2);
+         player.controls.time.total.innerHTML = setTime(player.audio.duration);
+         setInterval(function(){
+            if ( current < total && !player.audio.paused ) {
+               var currentPlay = player.audio.currentTime;
+               player.controls.time.actual.innerHTML = setTime(currentPlay);
+               setRatio(currentPlay,player.audio.duration);
+               player.controls.button.classList.remove('player__song__button--play');
+               player.controls.button.classList.add('player__song__button--pause');
+            } 
+            else {
+               player.controls.button.classList.remove('player__song__button--pause');
+               player.controls.button.classList.add('player__song__button--play');
+            }
+         }, 100);
+      }
+      player.functions.select = function(data) {
+         var title = data.getAttribute('data-title');
+         var artist = data.getAttribute('data-artist');
+         var src = data.getAttribute('data-src');
+         player.controls.timeline.fill.style.width = 0+"%";
+         player.data.title.innerHTML = title;
+         player.data.artist.innerHTML = artist;
+         player.src.src = 'mp3/'+src;
+         console.log(title);
+         player.audio.load();
+      }
+      player.audio.addEventListener('loadedmetadata', function() {
+         player.functions.durationState();
+      });
+      player.controls.timeline.path.addEventListener('click',function(e){
+         console.log('hihi');
+         var offset = this.getClientRects()[0];
+         var position = (e.clientX - offset.left);
+         var length = this.offsetWidth;
+         var ratio = (position/length);
+         var current = player.audio.duration * ratio;
+         console.log(current);
+         player.audio.currentTime = current;
+
+         //console.log(ratio);
+      });
+      player.controls.button.classList.add('player__song__button--play');
+
+      player.controls.button.addEventListener('click',function(e){
+         player.functions.playState();
+      });
+
+
+      var album = {};
+      album.container = document.querySelector('#player__list');
+      album.items = album.container.querySelectorAll('li');
+      for ( var i = 0; i<album.items.length; i++) {
+         album.items[i].addEventListener('click',function() {
+            player.functions.select(this);
+            this.classList.add('playing');
+         })
+      }
+      player.functions.select(album.items[0]);
+
+
+   </script>
 
 </div>
 
