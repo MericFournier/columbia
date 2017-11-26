@@ -1,1 +1,5 @@
 .DS_Store
+
+# Ignore fonts
+front/fonts/**
+columbia_theme/dist/fonts
