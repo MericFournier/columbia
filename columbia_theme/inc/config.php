@@ -9,10 +9,26 @@ add_action( 'wp_enqueue_scripts',  'my_style' );
 
 
 function my_script() {
-    // bundle
+    $cdn = array(
+        'foundation' => 'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js',
+        'lory' => 'https://cdnjs.cloudflare.com/ajax/libs/lory.js/2.2.0/lory.min.js',
+        'masonry' => 'https://masonry.desandro.com/masonry.pkgd.js',
+    );
+
+    // from here, do not touch
+    // -------------------------------------------------
+    $dependencies = array();
+    foreach ($cdn as $name => $url) {
+        wp_enqueue_script( $name, $url, array( 'jquery' ), null, true );
+        $dependencies[] = $name;
+    }
+    // app js
     $file = 'app.js';
-    wp_enqueue_script( 'main', JS_URL . '/' . $file, $dependencies, null, true );
-    wp_localize_script( 'main', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+    wp_enqueue_script( 'app', JS_URL . '/' . $file, $dependencies, null, true );
+    // ajax js
+    wp_enqueue_script( 'bundle', JS_URL . '/' . "bundle.js", $dependencies, null, true );
+    wp_localize_script( 'app', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+
 }
 add_action( 'wp_enqueue_scripts', 'my_script' );
 
@@ -65,9 +81,4 @@ function firstPixel_theme_support() {
     ) );
 }
 add_action( 'after_setup_theme', 'firstPixel_theme_support' );
-
-wp_register_script( 'lory', 'https://cdnjs.cloudflare.com/ajax/libs/lory.js/2.2.0/lory.min.js', null, null, true);
-wp_enqueue_script('lory');
-wp_register_script( 'masonry', 'https://masonry.desandro.com/masonry.pkgd.js', null, null, true);
-wp_enqueue_script('masonry');
 

@@ -7,7 +7,7 @@
 
 	$args = array(
 		"post_type" => "post",
-		"posts_per_page" => 10,
+		"posts_per_page" => 6,
 		"paged" => $paged,
 	);
 
@@ -30,9 +30,8 @@
 	?>
 	</div>
 </div>
-		
 
 <script>
 	var current_page = <?php echo $paged; ?>;
-   	var max_paged = <?= $the_query->max_num_pages; ?>
+   	var max_paged = <?= $the_query->max_num_pages; ?>;
 </script>

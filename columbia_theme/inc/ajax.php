@@ -9,7 +9,7 @@ function post_function() {
     $paged = $_POST['paged'] + 1;
 	$args = array(
 		"post_type" => "post",
-		"posts_per_page" => 3,
+		"posts_per_page" => 6,
 		"paged" => $paged,
 	);
 

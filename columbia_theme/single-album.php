@@ -69,17 +69,17 @@ if ( have_posts() ){
          <ul class="player__nav__list" id="player__list">
 
 <?php
-// Instantiate curl
-$curl = curl_init();
-curl_setopt($curl, CURLOPT_URL, 'https://api.deezer.com/album/'.get_field('id_deezer_album'));
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-$result = curl_exec($curl);
-curl_close($curl);
+   // Instantiate curl to get Deezer API
+   $curl = curl_init();
+   curl_setopt($curl, CURLOPT_URL, 'https://api.deezer.com/album/'.get_field('id_deezer_album'));
+   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+   $result = curl_exec($curl);
+   curl_close($curl);
 
-// Json decode
-$result = json_decode($result);
-$tracks = $result -> tracks -> data;
-foreach($tracks as $track):
+   // Json decode
+   $result = json_decode($result);
+   $tracks = $result -> tracks -> data;
+   foreach($tracks as $track):
 
 ?>
             <li data-artist="<?php the_title() ?>" data-title="<?= $track -> title; ?>" data-src="<?= $track -> preview ?>">
@@ -210,7 +210,6 @@ foreach($tracks as $track):
          player.functions.durationState();
       });
       player.controls.timeline.path.addEventListener('click',function(e){
-         console.log('hihi');
          var offset = this.getClientRects()[0];
          var position = (e.clientX - offset.left);
          var length = this.offsetWidth;
@@ -237,9 +236,6 @@ foreach($tracks as $track):
             this.classList.add('playing');
          })
       }
-      player.functions.select(album.items[0]);
-
-
-   </script>
+      player.functions.select(album.items[0]);</script>
 
 <?php get_footer(); ?>

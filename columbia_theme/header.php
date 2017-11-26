@@ -68,18 +68,26 @@
 	      <div class="header">
 	         <section class="header__topBar">
 
-	            <ul class="topBar__list">
-	               <li>
-	                  <a href="#"><img src="<?php echo IMG_URL."/facebook.svg" ?>" alt="Columbia sur facebook"></a>
-	               </li>
-	               <li>
-	                  <a href="#"><img src="<?php echo IMG_URL."/twitter.svg"?>" alt="Columbia sur Twitter"></a>
-	               </li>
-	               <li>
-	                  <a href="#"><img src="<?php echo IMG_URL."/instagram.svg"?>" alt="Columbia sur instagram"></a>
-	               </li>
-	            </ul>
-	         </section>
+            <ul class="topBar__list topBar__list--social">
+               <li>
+                  <a href="https://www.facebook.com/columbiarecords/" target="_blank"><img src="<?= IMG_URL ?>/facebook.svg" alt="Columbia sur facebook"></a>
+               </li>
+               <li>
+                  <a href="https://twitter.com/columbiarecords" target="_blank"><img src="<?= IMG_URL ?>/twitter.svg" alt="Columbia sur Twitter"></a>
+               </li>
+               <li>
+                  <a href="https://www.instagram.com/columbiarecords/" target="_blank"><img src="<?= IMG_URL ?>/instagram.svg" alt="Columbia sur instagram"></a>
+               </li>
+            </ul>
+            <ul class="topBar__list topBar__list--lang">
+               <li class="lang <?php if( preg_match('/fr/', get_locale())) echo "selected"; ?> ">
+                  <a href="<?= site_url() ?>"><img src="<?= IMG_URL ?>/french.svg" alt="Site français"></a>
+               </li>
+               <li class="lang <?php if( preg_match('/en/', get_locale())) echo "selected"; ?>">
+                  <a href="<?= site_url() ?>/en"><img src="<?= IMG_URL ?>/english.svg" alt="Site Anglais"></a>
+               </li>
+            </ul>
+         </section>
 			
 
 	         <div class="header__hero">
@@ -103,7 +111,10 @@
 	                  </ul>
 	               </nav>
 	            </section>
+	            <?php get_search_form(); ?>
 	         </div>
+
+
 
 	      </div>
 	      <!-- END HEADER MOBILE -->
