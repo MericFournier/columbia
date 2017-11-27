@@ -34,11 +34,11 @@ if ( have_posts() ){
       </li>
   <?php endif; ?>
   <?php if(get_field('instagram')): ?>
-               <li>
-                  <a href="<?php the_field('instagram'); ?>" target="_blank">
-                     <img src="<?php echo IMG_URL."/instagram.svg"?>" class="img-responsive">
-                  </a>
-               </li>
+     <li>
+        <a href="<?php the_field('instagram'); ?>" target="_blank">
+           <img src="<?php echo IMG_URL."/instagram.svg"?>" class="img-responsive">
+        </a>
+     </li>
   <?php endif; ?>
    </ul>
    <div class="hero__overlay"></div>

@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
     $(window).scroll( function(e) {
-        if ((window.innerHeight + window.scrollY) > document.body.offsetHeight) {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
             e.preventDefault();
             var ajax_section =$(".grid__template.newsList__grid"); // zone ou renvoyer le contenu de l'AJAX
             jQuery.post(

@@ -11,7 +11,6 @@ add_action( 'wp_enqueue_scripts',  'my_style' );
 function my_script() {
     $cdn = array(
         'foundation' => 'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js',
-        'lory' => 'https://cdnjs.cloudflare.com/ajax/libs/lory.js/2.2.0/lory.min.js',
         'masonry' => 'https://masonry.desandro.com/masonry.pkgd.js',
     );
 
@@ -82,3 +81,12 @@ function firstPixel_theme_support() {
 }
 add_action( 'after_setup_theme', 'firstPixel_theme_support' );
 
+
+function my_deregister_javascript() {
+    if ( !is_page('home') ) {
+        wp_deregister_script( 'bundle' );
+        wp_deregister_script( 'masonry' );
+    }
+}
+
+add_action( 'wp_enqueue_scripts', 'my_deregister_javascript', 100 );

@@ -28,8 +28,6 @@ function post_function() {
 	} else {
 	    // no posts found
 	}
-    //include TEMPLATE_ROOT.'/sections/affichage-ajax-post.php';
-
      die();
 
  }

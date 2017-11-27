@@ -155,7 +155,6 @@ Template Name: Artistes
       filtre.select = filtre.item.querySelector('.filtre__select__list');
       lists.push(filtre.select);
       filtre.items = filtre.select.querySelectorAll('.item_filtre');
-      console.log(filtre);
       filtre.div.addEventListener('click',function() {
          filtre.select.classList.toggle('listIsOpen');
          filtre.arrow.classList.toggle('listIsOpen');

@@ -42,7 +42,14 @@ if ( have_posts() ){
             <img src="<?php echo IMG_URL."/twitter.svg"?>" class="img-responsive">
          </a>
       </li>
-  <?php endif; ?>
+   <?php endif; ?>
+   <?php if(get_field('instagram')): ?>
+      <li>
+        <a href="<?php the_field('instagram'); ?>" target="_blank">
+           <img src="<?php echo IMG_URL."/instagram.svg"?>" class="img-responsive">
+        </a>
+      </li>
+   <?php endif; ?>
    </ul>
    <div class="hero__overlay"></div>
    <div class="img-responsive">
@@ -112,7 +119,7 @@ if ( have_posts() ){
             <p id="player_time_total">03:40</p>
          </div>
       </div>
-      <audio id="audio_player">
+      <audio id="audio_player" autoplay="false">
          <source id="audio_src" src="mp3/musique.mp3" type="audio/mp3" />
       </audio>
    </div>
@@ -129,6 +136,7 @@ if ( have_posts() ){
 
 <script>
 
+      //Player Gestion
       var player = {};
       player.section = document.querySelector('#player');
       player.audio = document.querySelector('#audio_player');
@@ -146,24 +154,29 @@ if ( have_posts() ){
       player.data.artist = document.querySelector('#player_data_artist');
       player.classnameState = ['playing'];
       player.functions = {};
+      player.playerNavTitle = document.querySelectorAll('.player__nav__title');
+
+      //handle player basics functions
       player.functions.playState = function() {
          if (player.audio.duration > 0 && !player.audio.paused) {
-            console.log('pause');
             player.audio.pause();
             player.controls.button.classList.remove('player__song__button--pause');
             player.controls.button.classList.add('player__song__button--play');
          } else {
-            console.log('play');
+
+            if(player.audio.readyState < 1)
+               player.audio.load();
             player.audio.play();
             player.controls.button.classList.remove('player__song__button--play');
             player.controls.button.classList.add('player__song__button--pause');
          }
       }
+
+      //timeline
       player.functions.durationState = function() {
          var setRatio = function(current,total) {
             ratio = (current/total)*100;
             ratio+=1;
-            //console.log(ratio);
             player.controls.timeline.fill.style.width = ratio+"%";
          }
          var setTime = function(duration) {
@@ -203,23 +216,22 @@ if ( have_posts() ){
          player.data.title.innerHTML = title;
          player.data.artist.innerHTML = artist;
          player.src.src = src;
-         player.audio.load();
-         player.audio.play();
       }
+
       player.audio.addEventListener('loadedmetadata', function() {
          player.functions.durationState();
       });
+
       player.controls.timeline.path.addEventListener('click',function(e){
          var offset = this.getClientRects()[0];
          var position = (e.clientX - offset.left);
          var length = this.offsetWidth;
          var ratio = (position/length);
          var current = player.audio.duration * ratio;
-         console.log(current);
          player.audio.currentTime = current;
 
-         //console.log(ratio);
       });
+
       player.controls.button.classList.add('player__song__button--play');
 
       player.controls.button.addEventListener('click',function(e){
@@ -236,6 +248,17 @@ if ( have_posts() ){
             this.classList.add('playing');
          })
       }
-      player.functions.select(album.items[0]);</script>
+      player.functions.select(album.items[0]);
+
+      for(let i = 0; i < player.playerNavTitle.length; i++)
+      {
+         player.playerNavTitle[i].addEventListener('click', function()
+         {
+            player.audio.load();
+            player.audio.play();
+         })
+      }
+
+</script>
 
 <?php get_footer(); ?>

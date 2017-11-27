@@ -5,6 +5,7 @@
 if ( have_posts() ){
    while ( have_posts() ) {
       the_post();
+      $currentTitle = get_the_title();
 ?>
 
 <div class="contenu">
@@ -14,7 +15,6 @@ if ( have_posts() ){
       <h1><?php the_title() ?></h1>
    </div>
    <div class="actu__hero">
-      <a class="button__contact" href="#"><img src="img/letter.svg" alt=""></a>
       <?php
          $connected = new WP_Query( array(
         'connected_type' => 'post_to_artist',
@@ -85,54 +85,53 @@ if ( have_posts() ){
 }
 ?>
 
+<div class="artist__actu actus__other">
+   <h2>Autres Actualités</h2>
+   <div class="slider__artiste__actu">
+   
+   <?php
+      //Wordpress loop to show the other articles
 
-<div class="slider slider__news js_slider">
-   <div class="frame frame__news js_frame">
-      <ul class="slides js_slides slides__news">
-         <?php
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+      $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+      $count = 0;
+      $args = array(
+         "post_type" => "post",
+         "posts_per_page" => 5,
+         "paged" => $paged,
+      );
 
-            $args = array(
-               "post_type" => "post",
-               "posts_per_page" => 10,
-               "paged" => $paged,
-            );
+      // The Query
+      $the_query = new WP_Query( $args );
 
-            // The Query
-            $the_query = new WP_Query( $args );
+      // The Loop
+      if ( $the_query->have_posts() ) {
+          while ( $the_query->have_posts() ) {
+              $the_query->the_post();
+              if(get_the_title() != $currentTitle && $count < 4):
+                  $count++;
+   ?>
+      <a href="<?php the_permalink() ?>" class="artist__actu__item">
+         <?php if(has_post_thumbnail()): ?>
+            <div class="img-responsive">
+               <?php the_post_thumbnail() ?>
+            </div>
+         <?php endif; ?>
+         <p class="date"><?php the_date('Y/m/d') ?></p>
+         <p class="title"><?php the_title() ?></p>
+      </a>
+   <?php
+      endif;
+      }
+         /* Restore original Post Data */
+      wp_reset_postdata();
+      } 
+      else 
+      {
+      // no posts found
+      }
 
-            // The Loop
-            if ( $the_query->have_posts() ) {
-                while ( $the_query->have_posts() ) {
-                    $the_query->the_post();
-         ?>
-            <li>
-               <div class="slide__news js_slide">
-                  <div class="data">
-                     <span><span><?php the_date('d') ?></span><span><?php get_template_part('templates/misc/date') ?></span></span>
-                     <a href="<?php the_permalink()?>"><?php the_title() ?></a>
-                  </div>
-                  <div class="img-responsive"><?php the_post_thumbnail(); ?></div>
-               </div>
-            </li>
-         <?php
-            }
-                      /* Restore original Post Data */
-            wp_reset_postdata();
-            } else 
-            {
-                // no posts found
-            }
-
-         ?>
-      </ul>
+   ?>
    </div>
-   <span class="js_prev prev">
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 501.5 501.5"><g><path fill="#2E435A" d="M302.67 90.877l55.77 55.508L254.575 250.75 358.44 355.116l-55.77 55.506L143.56 250.75z"/></g></svg>
-   </span>
-   <span class="js_next next">
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 501.5 501.5"><g><path fill="#2E435A" d="M199.33 410.622l-55.77-55.508L247.425 250.75 143.56 146.384l55.77-55.507L358.44 250.75z"/></g></svg>
-   </span>
 </div>
 </div>
 

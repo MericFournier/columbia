@@ -1041,7 +1041,6 @@ body {
       width: 70%; } }
   .artist__albums__item .cover {
     width: 100%;
-    height: 300px;
     position: relative;
     overflow: hidden; }
     @media screen and (max-width: 960px) {
@@ -1050,10 +1049,6 @@ body {
     @media screen and (max-width: 640px) {
       .artist__albums__item .cover {
         height: 170px; } }
-    .artist__albums__item .cover img {
-      position: absolute;
-      top: 0px;
-      left: 0px; }
     .artist__albums__item .cover a {
       position: absolute;
       top: 0px;
@@ -1144,7 +1139,8 @@ body {
     text-shadow: 0px 0px 4px #656565; }
 
 .player__artist {
-  background-color: #ffffff; }
+  background-color: #ffffff; 
+  padding: 0 0 78px 0;}
 
 .artist__list {
   display: -ms-flexbox;
@@ -1350,7 +1346,6 @@ body {
 
 .player__nav {
   padding: 5px;
-  margin-bottom: 5px;
   width: 50%;
   height: 400px; }
   .player__nav p, .player__nav q, .player__nav .actu__main ol p, .actu__main ol .player__nav p, .player__nav .actu__main ol span, .actu__main ol .player__nav span, .player__nav .actu__main li p, .actu__main li .player__nav p, .player__nav .actu__main li span, .actu__main li .player__nav span, .player__nav .actu__main ol, .actu__main .player__nav ol, .player__nav .actu__main li, .actu__main .player__nav li, .player__nav .news__slide .data .date, .news__slide .data .player__nav .date, .player__nav .js_slide .data span, .js_slide .data .player__nav span, .player__nav .filtre__select__list ul li, .filtre__select__list ul .player__nav li {
@@ -1389,9 +1384,11 @@ body {
       display: block;
       margin: 20px 0px; }
     .player__nav__list li .player__nav__title {
-      width: 40%; }
+      cursor:pointer;
+      width: 90%; }
     .player__nav__list li .player__nav__duration {
-      width: 40%; }
+      width: 8%;
+      margin-left: 2%; }
     .player__nav__list li .playIcon {
       width: 20px;
       height: 20px;
@@ -1461,6 +1458,7 @@ body {
           flex-direction: column;
       padding: 0px; } }
   .player__song .player__song__button {
+    cursor: pointer;
     display: block;
     width: 20px;
     height: 20px;
